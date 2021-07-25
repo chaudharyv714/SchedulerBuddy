@@ -1,0 +1,79 @@
+<%- include("header.ejs")%>
+    <div id="listCon">
+        <h1><% if(title=="search"){%>
+            <p>Search results for:</p><%=query%>
+            <%}else{%>
+            <%=title %>
+            <%}%>
+        </h1>
+        <% for(var i=0;i<lists.length;i++){%>
+            <div class="listBox">
+                <h2>
+                    <%=lists[i].title%>
+                </h2>
+                <form action="/<%=title %>" method="post">
+                    <input type="checkbox" name="id" value="<%=lists[i]._id%>" onchange="this.form.submit()">
+                </form>
+
+                <div class="listdetails">
+                    <a href="#" class="trigger" id="trigBtn<%=i%>">&#10247</a>
+
+
+                </div>
+            
+                <div id="desModal<%=i%>" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close" id="close<%=i%>">&times;</span>
+                        <p>
+                            <%=lists[i]._id%>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <%}%>
+
+
+    </div>
+    <% if(title!="search"){%>
+    <button id="addtaskbutton">Add</button>
+    <%}%>
+    <div id="addtaskModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" id="formclose">&times;</span>
+            <div id="formCon">
+                <form action="/" method="post">
+                    <label for="title">Title</label><input type="text" name="title">
+                    <label for="description">Description</label><input type="text" name="description">
+                    <label for="tag">Tag</label><input type="text" name="tag">
+                    <label for="type">Frequency</label>
+                    <select name="type" id="type">
+                        <option value="Once">Once</option>
+                        <option value="repeat">Recurring</option>
+                    </select>
+                    <label for="deadline">Deadline</label>
+                    <input type="date" name="deadline" id="deadline"><input type="time" name="time" id="time">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <button type="submit" value=<%=title%>>Add</button>
+        
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+   
+
+
+    <%- include("footer.ejs")%>

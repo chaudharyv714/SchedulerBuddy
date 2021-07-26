@@ -1,10 +1,14 @@
 <%- include("header.ejs")%>
     <div id="listCon">
-        <h1><% if(title=="search"){%>
-            <p>Search results for:</p><%=query%>
-            <%}else{%>
-            <%=title %>
-            <%}%>
+        <h1>
+            <% if(title=="search" ){%>
+                <p>Search results for:</p>
+                <%=query%>
+                    <%}else if(title=="overdue" ){%>
+                        <p>Overdue Items:</p>
+                        <%}else{%>
+                            <%=title %>
+                                <%}%>
         </h1>
         <% for(var i=0;i<lists.length;i++){%>
             <div class="listBox">
@@ -12,7 +16,8 @@
                     <%=lists[i].title%>
                 </h2>
                 <form action="/<%=title %>" method="post">
-                    <input type="checkbox" name="id" value="<%=lists[i]._id%>" onchange="this.form.submit()">
+                    <input type="checkbox" class="<%=lists[i].deadline%>" name="id" value="<%=lists[i]._id%>"
+                        onchange="this.form.submit()">
                 </form>
 
                 <div class="listdetails">
@@ -20,15 +25,27 @@
 
 
                 </div>
-            
+
                 <div id="desModal<%=i%>" class="modal">
 
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" id="close<%=i%>">&times;</span>
-                        <p>
-                            <%=lists[i]._id%>
-                        </p>
+                        <div class="desDiv">
+                            <h1>Task Details</h1>
+                            <div class="desDivChild">Title:&nbsp;&nbsp;<%=lists[i].title%>
+                            </div>
+                            <div class="desDivChild">Description:&nbsp;&nbsp;<%=lists[i].description%>
+                            </div>
+                            <div class="desDivChild">Type:&nbsp;&nbsp;<%=lists[i].type%>
+                            </div>
+                            <div class="desDivChild deadline">Due Date:&nbsp;&nbsp;<%=lists[i].deadline%>
+                            </div>
+                            <div class="desDivChild">Tag:&nbsp;&nbsp;<%=lists[i].tag%>
+                            </div>
+                            <div class="desDivChild">Priority:&nbsp;&nbsp;<%=lists[i].priority%>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -37,43 +54,46 @@
 
 
     </div>
-    <% if(title!="search"){%>
-    <button id="addtaskbutton">Add</button>
-    <%}%>
-    <div id="addtaskModal" class="modal">
+    <% if(!(title=="search" )){%>
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close" id="formclose">&times;</span>
-            <div id="formCon">
-                <form action="/" method="post">
-                    <label for="title">Title</label><input type="text" name="title">
-                    <label for="description">Description</label><input type="text" name="description">
-                    <label for="tag">Tag</label><input type="text" name="tag">
-                    <label for="type">Frequency</label>
-                    <select name="type" id="type">
-                        <option value="Once">Once</option>
-                        <option value="repeat">Recurring</option>
-                    </select>
-                    <label for="deadline">Deadline</label>
-                    <input type="date" name="deadline" id="deadline"><input type="time" name="time" id="time">
-                    <label for="priority">Priority</label>
-                    <select name="priority" id="priority">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                    <button type="submit" value=<%=title%>>Add</button>
-        
-                </form>
+        <button id="addtaskbutton">Add</button>
+
+        <%}%>
+            <div id="addtaskModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close" id="formclose">&times;</span>
+                    <div id="formCon">
+                        <form action="/" method="post">
+                            <label for="title">Title</label><input type="text" name="title">
+                            <label for="description">Description</label><input type="text" name="description">
+                            <label for="tag">Tag</label><input type="text" name="tag">
+                            <label for="type">Frequency</label>
+                            <select name="type" id="type">
+                                <option value="Once">Once</option>
+                                <option value="repeat">Recurring</option>
+                            </select>
+                            <label for="deadline">Deadline</label>
+                            <input type="date" name="deadline" id="deadline"><input type="time" name="time" id="time">
+                            <label for="priority">Priority</label>
+                            <select name="priority" id="priority">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <input type="hidden" name="listname" value=<%=title%> >
+                            <button type="submit" value=<%=title%>>Add</button>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
-        </div>
-
-    </div>
 
 
 
-   
 
 
-    <%- include("footer.ejs")%>
+
+            <%- include("footer.ejs")%>

@@ -1,6 +1,35 @@
+:root{
+ --blue:#05386b;
+ --green:#5cdb95;
+ --green2:#379683;
+ --white:#edf5e1;
+}   
+body{
+    background:linear-gradient(45deg,var(--blue),var(--white));
+    color:var(--blue);
+    margin: 0;
+   
+}
 nav{
+    width:100%;
     display:flex;
     flex-direction: row;
+    background-color: var(--blue);
+    padding-bottom:1rem;
+}
+#navLink ul li:nth-child(2) form button{
+    padding:0;
+    border:0;
+    background-color: inherit;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color:var(--white);
+    text-shadow: 1px 1px var(--green);
+    cursor: pointer;
+}
+hr{
+    margin:0;
+    margin-bottom: 2rem;
 }
 #logocon{
 width:20vw;       
@@ -17,56 +46,89 @@ width:20vw;
 }
 #navLink ul li a{
     text-decoration: none;
-    color:grey;
     font-weight: 600;
     font-size: 1.2rem;
+    color:var(--white);
+    text-shadow: 1px 1px var(--green);
 }
 #navLink ul li:last-child form button{
-    border-radius:5px;
+    border:none;
     padding:0 10px;
-    background-color: grey;
-    font-size: larger;
+    background-color: var(--blue);
+    font-size: x-large;
 }
 #listCon,#formCon{
     border-radius:2px;
     display:block;
     width:50%;
-    margin:20px auto;
+    margin:0 auto 20px auto;
     text-align: center;
 }    
 #listCon{
     display: flex;
-    flex-direction: column;border: 2px solid red;
+    flex-direction: column;
+    background:linear-gradient(45deg,var(--blue),var(--white));
+    border: 50px solid var(--blue);
 
 }
-#addtaskbutton{
+#addtaskbutton,#formCon form button{
  display:block;
  margin:auto;
  margin-top: 0%;
+ padding:5px;
+ border-radius: 5px;
+ background:var(--blue);
+ color:var(--white);
+ text-shadow: 0.5px 0.5px var(--green);
 }
-#formCon{
-    border: 2px dotted blue;
+#formCon form button{
+    margin:1rem auto;
+}
+#formCon,.desDiv{
+    border: 2px solid var(--blue);
+    background: var(--white);
+    font-style: oblique;
+}
+.desDiv{
+    text-align:left ;
+    font-style:bold;
+    padding: 2rem;
 }
 #listCon h1{
-    border:1px solid black;
+    border-bottom:1px solid var(--blue);
     margin-bottom:20px;
+    padding: auto 20px;
+    margin:10px;
+    border-radius:10px;
+    text-shadow: 1px 1px var(--green);    
 }
+#listCon h1::first-letter{
+    text-transform: capitalize;
+}
+
 .listBox{
-    border:1px solid green;
+    border-bottom:1px solid var(--blue);
     border-radius: 2px;
     margin:10px auto;
     width:80%;
     padding:0 10% ;
-
     box-sizing: border-box;
     display:flex;
     flex-direction:row;
     align-items: center;
+    background:linear-gradient(45deg, var(--blue),var(--white));
 }
-.listbox h2{
-    padding: auto 20px;
-    margin-top:15px;
+.listBox h2{
+    padding: auto ;
     width:80%;
+
+}
+.listBox a{
+    color:inherit;
+    text-decoration: none;
+}
+.listBox a h2::first-letter{
+    text-transform: capitalize;
 }
 .listbox form{
     width:10%;
@@ -77,7 +139,6 @@ width:20vw;
 }
 
 #formCon form{
-    width:80%;
     align-items: center;
     display:flex;
     flex-direction: column;
@@ -86,6 +147,10 @@ width:20vw;
 #formCon form label{
     margin-top: 5px;;
 }
+.trigger{
+    color:var(--blue);
+    text-decoration: none;
+}
 iframe{
     display:block;
     width:80%;
@@ -93,6 +158,20 @@ iframe{
     margin:auto;
     padding: 20px;
     border-radius: 20px;
+}
+input{
+    background-color:var(--white);
+    font-style: italic;
+    text-align: right;
+    padding:0.2rem;
+    padding-left:0.5rem;
+}
+.desDiv h1{
+    text-shadow: none;
+    font-style: normal;
+    text-align: center;
+    border-radius:none;
+
 }
 
 
@@ -112,10 +191,10 @@ iframe{
   
   /* Modal Content/Box */
   .modal-content {
-    background-color: #fefefe;
+    background-color: rgba(255,0,0,0,4);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
+
     width: 80%; /* Could be more or less, depending on screen size */
   }
   

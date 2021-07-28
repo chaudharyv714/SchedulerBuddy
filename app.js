@@ -5,7 +5,9 @@ var mongoose = require('mongoose');
 const { text } = require("body-parser");
 const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 
-mongoose.connect('mongodb://localhost/scheduler', { useNewUrlParser: true, useUnifiedTopology: true, });
+var dburllocal='mongodb://localhost/scheduler';
+var dburlglobal="mongodb+srv://chaudharyv714:chaudharyv714@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";
+mongoose.connect(dburllocal, { useNewUrlParser: true, useUnifiedTopology: true, });
 const db = mongoose.connection;
 db.on('error', (err) => {
     console.log(err)

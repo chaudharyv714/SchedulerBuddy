@@ -265,9 +265,12 @@ task.find({ deadline: { $lt: today }, reminder: false }, (err, docs) => {
     }
 })
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 
-
-app.listen(8000, (error) => {
+app.listen(port, (error) => {
     if (error) { console.log(error); }
     else { console.log("Server running at Port:8000"); }
 

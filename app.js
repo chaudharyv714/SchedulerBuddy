@@ -7,7 +7,7 @@ const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 
 var dburllocal='mongodb://localhost/scheduler';
 var dburlglobal="mongodb+srv://chaudharyv714:chaudharyv714@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";
-mongoose.connect(dburllocal, { useNewUrlParser: true, useUnifiedTopology: true, });
+mongoose.connect(dburlglobal, { useNewUrlParser: true, useUnifiedTopology: true, });
 const db = mongoose.connection;
 db.on('error', (err) => {
     console.log(err)

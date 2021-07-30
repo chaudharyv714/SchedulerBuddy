@@ -168,9 +168,6 @@ input{
     padding:0.2rem;
     padding-left:0.5rem;
 }
-input[name="description"]{
-    height: 10em;
-}
 .desDiv h1{
     text-shadow: none;
     font-style: normal;
@@ -214,7 +211,7 @@ footer h4 a{
     background-color: rgba(255,0,0,0,4);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-
+   
     width: 80%; /* Could be more or less, depending on screen size */
   }
   
@@ -276,8 +273,13 @@ nav{
 }
 #listCon{
     width:90%;
-    border:20px solid var(--blue
-    );
+    border:20px solid var(--blue);
+}
+#formCon{
+    width:100%;
+}
+#formCon form{
+    padding:2rem;
 }
 
 }

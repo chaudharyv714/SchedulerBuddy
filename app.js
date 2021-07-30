@@ -10,7 +10,7 @@ const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 var url;
 let port = process.env.PORT;
 var dburllocal = 'mongodb://localhost/scheduler';
-var dburlglobal = "mongodb+srv://chaudharyv714:chaudharyv714@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";
+var dburlglobal = "mongodb+srv://<yourmongoDBusername>:<YourMongoDBPassword>@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";//update your mongo db usrname and password
 if (port == null || port == "") {
     url = dburllocal;
 } else {
@@ -246,8 +246,8 @@ var sendReminder = (element) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'chaudharyv714@gmail.com',
-            pass: 'iitfaridabad'
+            user: '<your email>',
+            pass: '<your email password>'//update your email id and password
         }
     });
     const mailOptions = {

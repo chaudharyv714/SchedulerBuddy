@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 const { text } = require("body-parser");
 const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 
+
+//mongoose connect
 var url;
 let port = process.env.PORT;
 var dburllocal = 'mongodb://localhost/scheduler';
@@ -15,6 +17,8 @@ if (port == null || port == "") {
     url = dburlglobal;
 }
 
+
+//mongoose connect verify
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, });
 const db = mongoose.connection;
 db.on('error', (err) => {
@@ -24,6 +28,8 @@ db.once('open', () => {
     console.log("database connection established");
 });
 
+
+//mongoose schema
 const itemschema = new mongoose.Schema({
     title: String,
     description: String,
@@ -38,6 +44,8 @@ const listSchema = new mongoose.Schema({
     items: [itemschema],
 });
 
+
+//mongoose models
 const list = mongoose.model("list", listSchema);
 const task = mongoose.model("task", itemschema);
 
@@ -48,6 +56,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 
+//demo data
 var listname;
 var lists;
 var demolist = [
@@ -64,12 +73,15 @@ var demolist = [
 
 ];
 
+
+//root get request
 app.get("/", (req, res) => {
     res.render('index', { title: "Home" });
 });
 
+
+//newtask post request
 app.post("/", (req, res) => {
-    //console.log( req.body.deadline+" "+req.body.time);
 
     var newtask = new task({
         title: req.body.title,
@@ -97,6 +109,8 @@ app.post("/", (req, res) => {
     });
 });
 
+
+//get requests
 app.get("/:listname", (req, res) => {
     listname = req.params.listname;
 
@@ -156,6 +170,7 @@ app.get("/:listname", (req, res) => {
 });
 
 
+//post requests
 app.post("/:listname", (req, res) => {
     listname = req.params.listname;
 
@@ -226,7 +241,7 @@ app.post("/:listname", (req, res) => {
     }
 })
 
-//nodemailer send mail
+//nodemailer
 var sendReminder = (element) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -236,9 +251,9 @@ var sendReminder = (element) => {
         }
     });
     const mailOptions = {
-        from: 'sender@email.com', // sender address
-        to: 'vipin_b190922me@nitc.ac.in', // list of receivers
-        subject: 'You have a task coming Up ', // Subject line
+        from: 'sender@email.com',
+        to: 'vipin_b190922me@nitc.ac.in',
+        subject: 'You have a task coming Up ',
         html: 'Following task is still undone:<h2>' + element.title + '</h2><p>Title:' + element.title + '</p><p>Description:' + element.description + '</p><p>Due Date:' + element.deadline + '</p><p>Tag:' + element.tag + '</p>'  // plain text body
     };
 
@@ -247,16 +262,17 @@ var sendReminder = (element) => {
             console.log(err)
         else
             console.log("Reminder Sent\n" + info);
-            task.updateOne({ _id: element._id }, { reminder: true }, (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(' Reminder Updated');
-                }
-            });
+        task.updateOne({ _id: element._id }, { reminder: true }, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(' Reminder Updated');
+            }
+        });
     });
 };
 
+//mailsend late reminders
 var today = new Date();
 task.find({ deadline: { $lt: today }, reminder: false }, (err, docs) => {
     if (err) {
@@ -267,13 +283,13 @@ task.find({ deadline: { $lt: today }, reminder: false }, (err, docs) => {
             console.log(docs);
             docs.forEach(element => {
                 sendReminder(element);
-          
+
             });
         }
     }
 })
 
-
+//port
 if (port == null || port == "") {
     port = 8000;
 }

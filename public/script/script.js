@@ -1,4 +1,4 @@
-//alert("hello!");
+//navbar
 var menu = document.getElementById('menubutton');
 var navLink = document.getElementById('navLink');
 var menustate = 0;
@@ -14,8 +14,9 @@ menu.onclick = function () {
     }
 }
 
-var trig = document.getElementsByClassName('trigger');
 
+//modal for description boxes
+var trig = document.getElementsByClassName('trigger');
 for (var i = 0; i < trig.length; i++) {
     var trigmodal = document.getElementById("desModal" + i);
     var trigbtn = document.getElementById("trigBtn" + i);
@@ -29,6 +30,8 @@ for (var i = 0; i < trig.length; i++) {
     }
 }
 
+
+//modal for addition forms
 var formmodal = document.getElementById('addtaskModal');
 var formbtn = document.getElementById('addtaskbutton');
 var formspan = document.getElementById('formclose');
@@ -40,7 +43,7 @@ formspan.onclick = function () {
     formmodal.style.display = "none";
 }
 
-
+//modal end function
 window.onclick = function (event) {
     if (event.target == formmodal) {
         formmodal.style.display = "none";
@@ -50,7 +53,7 @@ window.onclick = function (event) {
     }
 }
 
-
+//overdue item special aesthetics
 var today = new Date();
 var deadline = document.getElementsByClassName('deadline');
 for (let i = 0; i < deadline.length; i++) {

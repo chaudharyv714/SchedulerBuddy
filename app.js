@@ -5,9 +5,17 @@ var mongoose = require('mongoose');
 const { text } = require("body-parser");
 const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 
-var dburllocal='mongodb://localhost/scheduler';
-var dburlglobal="mongodb+srv://chaudharyv714:chaudharyv714@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";
-mongoose.connect(dburlglobal, { useNewUrlParser: true, useUnifiedTopology: true, });
+var url;
+let port = process.env.PORT;
+var dburllocal = 'mongodb://localhost/scheduler';
+var dburlglobal = "mongodb+srv://chaudharyv714:chaudharyv714@cluster0.r5erw.mongodb.net/scheduler?retryWrites=true&w=majority";
+if (port == null || port == "") {
+    url = dburllocal;
+} else {
+    url = dburlglobal;
+}
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, });
 const db = mongoose.connection;
 db.on('error', (err) => {
     console.log(err)
@@ -39,10 +47,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-    res.render('index', { title: "Home" });
-});
-
 
 var listname;
 var lists;
@@ -59,6 +63,40 @@ var demolist = [
     },
 
 ];
+
+app.get("/", (req, res) => {
+    res.render('index', { title: "Home" });
+});
+
+app.post("/", (req, res) => {
+    //console.log( req.body.deadline+" "+req.body.time);
+
+    var newtask = new task({
+        title: req.body.title,
+        description: req.body.description,
+        deadline: req.body.deadline + " " + req.body.time,
+        type: req.body.type,
+        priority: req.body.priority,
+        tag: req.body.tag.toLowerCase(),
+        reminder: false,
+    });
+    newtask.save((err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            list.updateOne({ name: listname }, { $push: { items: newtask } }, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log("new task added:" + req.body.title);
+                    res.redirect("/" + listname);
+                }
+            });
+        }
+    });
+});
+
 app.get("/:listname", (req, res) => {
     listname = req.params.listname;
 
@@ -74,15 +112,11 @@ app.get("/:listname", (req, res) => {
             }
         })
     } else {
-
-
         list.countDocuments({ name: listname }, (err, count) => {
             if (err) {
                 console.log(err);
             }
             else {
-
-
                 if (count) {
                     list.findOne({ name: listname }, (error, docs) => {
                         if (error) {
@@ -120,34 +154,7 @@ app.get("/:listname", (req, res) => {
     }
 
 });
-app.post("/", (req, res) => {
-    //console.log( req.body.deadline+" "+req.body.time);
 
-    var newtask = new task({
-        title: req.body.title,
-        description: req.body.description,
-        deadline: req.body.deadline + " " + req.body.time,
-        type: req.body.type,
-        priority: req.body.priority,
-        tag: req.body.tag.toLowerCase(),
-        reminder: false,
-    });
-    newtask.save((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            list.updateOne({ name: listname }, { $push: { items: newtask } }, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log("new task added:" + req.body.title);
-                    res.redirect("/" + listname);
-                }
-            });
-        }
-    });
-});
 
 app.post("/:listname", (req, res) => {
     listname = req.params.listname;
@@ -240,6 +247,13 @@ var sendReminder = (element) => {
             console.log(err)
         else
             console.log("Reminder Sent\n" + info);
+            task.updateOne({ _id: element._id }, { reminder: true }, (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(' Reminder Updated');
+                }
+            });
     });
 };
 
@@ -248,26 +262,20 @@ task.find({ deadline: { $lt: today }, reminder: false }, (err, docs) => {
     if (err) {
         console.log(err);
     } else {
-        if (docs.length!=0) {
+        if (docs.length != 0) {
             console.log(docs.length);
             console.log(docs);
             docs.forEach(element => {
                 sendReminder(element);
-                task.updateOne({_id:element._id},{reminder:true},(err)=>{
-                    if(err){
-                        console.log(err);
-                    }else{
-                       console.log(' Reminder Updated');
-                    }
-                });
+          
             });
         }
     }
 })
 
-let port = process.env.PORT;
+
 if (port == null || port == "") {
-  port = 8000;
+    port = 8000;
 }
 
 app.listen(port, (error) => {

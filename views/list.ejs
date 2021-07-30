@@ -15,10 +15,13 @@
                 <h2>
                     <%=lists[i].title%>
                 </h2>
+                <%if(lists[i].type!="note"){%>
                 <form action="/<%=title %>" method="post">
                     <input type="checkbox" class="<%=lists[i].deadline%>" name="id" value="<%=lists[i]._id%>"
                         onchange="this.form.submit()">
                 </form>
+                <%}%>
+
 
                 <div class="listdetails">
                     <a href="#" class="trigger" id="trigBtn<%=i%>">&#10247</a>
@@ -27,8 +30,6 @@
                 </div>
 
                 <div id="desModal<%=i%>" class="modal">
-
-                    <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close" id="close<%=i%>">&times;</span>
                         <div class="desDiv">
@@ -60,8 +61,6 @@
 
         <%}%>
             <div id="addtaskModal" class="modal">
-
-                <!-- Modal content -->
                 <div class="modal-content">
                     <span class="close" id="formclose">&times;</span>
                     <div id="formCon">
@@ -71,8 +70,8 @@
                             <label for="tag">Tag</label><input type="text" name="tag">
                             <label for="type">Frequency</label>
                             <select name="type" id="type">
-                                <option value="Once">Once</option>
-                                <option value="repeat">Recurring</option>
+                                <option value="task">Task</option>
+                                <option value="note">Note</option>
                             </select>
                             <label for="deadline">Deadline</label>
                             <input type="date" name="deadline" id="deadline"><input type="time" name="time" id="time">

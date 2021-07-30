@@ -63,7 +63,8 @@ width:20vw;
     width:50%;
     margin:0 auto 20px auto;
     text-align: center;
-}    
+}  
+
 #listCon{
     display: flex;
     flex-direction: column;
@@ -145,7 +146,8 @@ width:20vw;
 }
 
 #formCon form label{
-    margin-top: 5px;;
+    margin-top: 5px;
+
 }
 .trigger{
     color:var(--blue);
@@ -166,12 +168,30 @@ input{
     padding:0.2rem;
     padding-left:0.5rem;
 }
+input[name="description"]{
+    height: 10em;
+}
 .desDiv h1{
     text-shadow: none;
     font-style: normal;
     text-align: center;
     border-radius:none;
 
+}
+footer{
+    margin-top:4rem;
+    background-color: var(--blue);
+}
+footer h4{
+display: block;
+margin:auto;
+padding:1em;
+color:var(--white);
+text-shadow: 0.5px 0.5px var(--green);
+}
+footer h4 a{
+    color:var(--white);
+    text-shadow: 0.5px 0.5px var(--green);
 }
 
 
@@ -212,3 +232,52 @@ input{
     text-decoration: none;
     cursor: pointer;
   }
+
+
+#menu{
+width:0;
+height:0;
+}  
+
+@media  (max-width:576px){
+
+nav{
+    flex-direction: column;
+}
+#menu{
+    height:auto;
+    width:95%;
+
+}
+#menu button{
+    border:none;
+    background-color: inherit;
+    color:black;
+    float: right;
+    font-size: 4em;
+    margin:0;
+   
+}
+
+#navLink ul{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    box-sizing: border-box;
+}
+#navLink ul li{
+    padding:1em 0.5em;
+    font-size:2em;
+    width:100%;
+    border-bottom: 1px solid black;
+}
+#navLink{
+    display: none;
+}
+#listCon{
+    width:90%;
+    border:20px solid var(--blue
+    );
+}
+
+}

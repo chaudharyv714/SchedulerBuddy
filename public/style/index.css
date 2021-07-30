@@ -234,6 +234,7 @@ footer h4 a{
 #menu{
 width:0;
 height:0;
+overflow:hidden;
 }  
 
 @media  (max-width:576px){

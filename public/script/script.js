@@ -1,3 +1,5 @@
+
+
 //navbar
 var menu = document.getElementById('menubutton');
 var navLink = document.getElementById('navLink');
@@ -15,19 +17,28 @@ menu.onclick = function () {
 }
 
 
+
+
 //modal for description boxes
 var trig = document.getElementsByClassName('trigger');
-for (var i = 0; i < trig.length; i++) {
-    var trigmodal = document.getElementById("desModal" + i);
-    var trigbtn = document.getElementById("trigBtn" + i);
-    var trigspan = document.getElementById("close" + i)
+for (let i = 0; i < trig.length; i++) {
 
-    trigbtn.onclick = function () {
-        trigmodal.style.display = "block";
-    }
-    trigspan.onclick = function () {
-        trigmodal.style.display = "none";
-    }
+    (function (index) {
+        var trigmodal = document.getElementById("desModal" + i);
+        var trigbtn = document.getElementById("trigBtn" + i);
+        var trigspan = document.getElementById("close" + i)
+
+        trigbtn.onclick = function () {
+            console.log(index);
+            trigmodal.style.display = "block";
+
+        }
+        trigspan.onclick = function () {
+            trigmodal.style.display = "none";
+
+        }
+
+    })(i)
 }
 
 
@@ -48,9 +59,7 @@ window.onclick = function (event) {
     if (event.target == formmodal) {
         formmodal.style.display = "none";
     }
-    if (event.target == trigmodal) {
-        trigmodal.style.display = "none";
-    }
+
 }
 
 //overdue item special aesthetics
